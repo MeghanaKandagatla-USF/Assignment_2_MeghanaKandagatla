@@ -63,7 +63,17 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return new List<int>(); // Placeholder
+                //return new List<int>(); // Placeholder
+
+                HashSet<int> flag = new HashSet<int>(nums);
+                List<int> missing = new List<int>();
+                for (int i = 1; i <= nums.Length; i++)
+                {
+                    if (!flag.Contains(i) && i <= nums.Length)
+                        missing.Add(i);
+                }
+
+                return missing;
             }
             catch (Exception)
             {
@@ -76,8 +86,26 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                int left = 0, right = nums.Length - 1;
+                while (left < right)
+                {
+                
+                    while (left < right && nums[left] % 2 == 0) left++;
+                    while (left < right && nums[right] % 2 != 0) right--;
+
+                    if (left < right)
+                    {
+                        int temp = nums[left];
+                        nums[left] = nums[right];
+                        nums[right] = temp;
+
+                        left++;
+                        right--;
+                    }
+                }
+
+                return nums;
+
             }
             catch (Exception)
             {
@@ -90,9 +118,22 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
-            }
+                Dictionary<int, int> map = new Dictionary<int, int>();
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];
+                    if (map.ContainsKey(complement))
+                    {
+                        return new int[] { map[complement], i };
+                    }
+                    if (!map.ContainsKey(nums[i]))
+                    {
+                        map[nums[i]] = i;
+                    }
+                }
+
+                return new int[0];
+                }
             catch (Exception)
             {
                 throw;
@@ -104,8 +145,12 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                Array.Sort(nums);
+                int n = nums.Length;
+                int product1 = nums[n - 1] * nums[n - 2] * nums[n - 3];
+                int product2 = nums[0] * nums[1] * nums[n - 1];
+
+                return Math.Max(product1, product2);
             }
             catch (Exception)
             {
@@ -118,8 +163,15 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+               if (decimalNumber == 0) return "0";
+
+                string binary = "";
+                while (decimalNumber > 0)
+                {
+                    binary = (decimalNumber % 2) + binary;
+                    decimalNumber /= 2;
+                }
+                return binary;
             }
             catch (Exception)
             {
@@ -132,8 +184,24 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                int left = 0;
+                int right = nums.Length - 1;
+
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+
+                    if (nums[mid] > nums[right])
+                    {
+                        left = mid + 1;
+                    }
+                    else
+                    {
+                        right = mid;
+                    }
+                }
+
+                return nums[left];
             }
             catch (Exception)
             {
@@ -146,8 +214,17 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                 if (x < 0 || (x % 10 == 0 && x != 0))
+            return false;
+
+        int rev = 0;
+
+        while (x > rev)
+        {
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
+        return x == rev || x == rev / 10;
             }
             catch (Exception)
             {
@@ -160,8 +237,18 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                if (n == 0) return 0;
+                if (n == 1) return 1;
+
+                int a = 0, b = 1;
+                for (int i = 2; i <= n; i++)
+                {
+                    int temp = a + b;
+                    a = b;
+                    b = temp;
+                }
+
+                return b;
             }
             catch (Exception)
             {
