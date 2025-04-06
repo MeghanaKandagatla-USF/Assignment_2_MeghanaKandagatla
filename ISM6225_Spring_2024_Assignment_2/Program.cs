@@ -58,21 +58,18 @@ namespace Assignment_2
         }
 
         // Question 1: Find Missing Numbers in Array
+// This function finds all the missing numbers in the range [1, n] from the given array.
         public static IList<int> FindMissingNumbers(int[] nums)
         {
             try
             {
-                // Write your code here
-                //return new List<int>(); // Placeholder
-
-                HashSet<int> flag = new HashSet<int>(nums);
-                List<int> missing = new List<int>();
+                                HashSet<int> flag = new HashSet<int>(nums); // Store all numbers in a HashSet for quick lookup.
+                List<int> missing = new List<int>(); // List to store missing numbers.
                 for (int i = 1; i <= nums.Length; i++)
                 {
-                    if (!flag.Contains(i) && i <= nums.Length)
+                    if (!flag.Contains(i)) // If the number is not in the HashSet, add it to the missing list.
                         missing.Add(i);
                 }
-
                 return missing;
             }
             catch (Exception)
@@ -82,6 +79,7 @@ namespace Assignment_2
         }
 
         // Question 2: Sort Array by Parity
+// This function sorts an array such that all even numbers come before odd numbers.
         public static int[] SortArrayByParity(int[] nums)
         {
             try
@@ -89,12 +87,12 @@ namespace Assignment_2
                 int left = 0, right = nums.Length - 1;
                 while (left < right)
                 {
-                
-                    while (left < right && nums[left] % 2 == 0) left++;
-                    while (left < right && nums[right] % 2 != 0) right--;
+                                    while (left < right && nums[left] % 2 == 0) left++; // Move left pointer if the number is even.
+                    while (left < right && nums[right] % 2 != 0) right--; // Move right pointer if the number is odd.
 
                     if (left < right)
                     {
+// Swap even and odd numbers.
                         int temp = nums[left];
                         nums[left] = nums[right];
                         nums[right] = temp;
@@ -103,9 +101,7 @@ namespace Assignment_2
                         right--;
                     }
                 }
-
                 return nums;
-
             }
             catch (Exception)
             {
@@ -114,25 +110,25 @@ namespace Assignment_2
         }
 
         // Question 3: Two Sum
+// This function finds two indices in the array such that their values add up to the target.
         public static int[] TwoSum(int[] nums, int target)
         {
             try
             {
-                Dictionary<int, int> map = new Dictionary<int, int>();
+                Dictionary<int, int> map = new Dictionary<int, int>(); // Dictionary to store numbers and their indices.
                 for (int i = 0; i < nums.Length; i++)
                 {
-                    int complement = target - nums[i];
-                    if (map.ContainsKey(complement))
+                    int complement = target - nums[i]; // Calculate the complement.
+                    if (map.ContainsKey(complement)) // Check if the complement exists in the dictionary.
                     {
-                        return new int[] { map[complement], i };
+                        return new int[] { map[complement], i }; // Return the indices.
                     }
                     if (!map.ContainsKey(nums[i]))
                     {
-                        map[nums[i]] = i;
+                        map[nums[i]] = i; // Add the number and its index to the dictionary.
                     }
                 }
-
-                return new int[0];
+                return new int[0]; // Return an empty array if no solution is found.
                 }
             catch (Exception)
             {
@@ -141,16 +137,17 @@ namespace Assignment_2
         }
 
         // Question 4: Find Maximum Product of Three Numbers
+// This function finds the maximum product of any three numbers in the array.
         public static int MaximumProduct(int[] nums)
         {
             try
             {
-                Array.Sort(nums);
+                Array.Sort(nums); // Sort the array.
                 int n = nums.Length;
+// Calculate the product of the three largest numbers and the product of two smallest and the largest number.
                 int product1 = nums[n - 1] * nums[n - 2] * nums[n - 3];
                 int product2 = nums[0] * nums[1] * nums[n - 1];
-
-                return Math.Max(product1, product2);
+                return Math.Max(product1, product2); // Return the maximum of the two products.
             }
             catch (Exception)
             {
@@ -159,17 +156,18 @@ namespace Assignment_2
         }
 
         // Question 5: Decimal to Binary Conversion
+// This function converts a decimal number to its binary representation.
         public static string DecimalToBinary(int decimalNumber)
         {
             try
             {
-               if (decimalNumber == 0) return "0";
+               if (decimalNumber == 0) return "0"; // Handle the case for 0.
 
                 string binary = "";
                 while (decimalNumber > 0)
                 {
-                    binary = (decimalNumber % 2) + binary;
-                    decimalNumber /= 2;
+                    binary = (decimalNumber % 2) + binary; // Append the remainder (0 or 1) to the binary string.
+                    decimalNumber /= 2; // Divide the number by 2.
                 }
                 return binary;
             }
@@ -180,6 +178,7 @@ namespace Assignment_2
         }
 
         // Question 6: Find Minimum in Rotated Sorted Array
+// This function finds the minimum element in a rotated sorted array.
         public static int FindMin(int[] nums)
         {
             try
@@ -189,19 +188,18 @@ namespace Assignment_2
 
                 while (left < right)
                 {
-                    int mid = left + (right - left) / 2;
+                    int mid = left + (right - left) / 2; // Calculate the middle index.
 
-                    if (nums[mid] > nums[right])
+                    if (nums[mid] > nums[right]) // If the middle element is greater than the rightmost element, search the right half.
                     {
                         left = mid + 1;
                     }
-                    else
+                    else // Otherwise, search the left half.
                     {
                         right = mid;
                     }
                 }
-
-                return nums[left];
+                return nums[left]; // The left pointer will point to the minimum element.
             }
             catch (Exception)
             {
@@ -210,23 +208,21 @@ namespace Assignment_2
         }
 
         // Question 7: Palindrome Number
+// This function checks if a given number is a palindrome.
         public static bool IsPalindrome(int x)
         {
             try
             {
-                // Negative numbers are not palindromes
-                if (x < 0 || (x % 10 == 0 && x != 0))
+                                if (x < 0 || (x % 10 == 0 && x != 0)) // Negative numbers and numbers ending with 0 (except 0 itself) are not palindromes.
                     return false;
 
                 int rev = 0;
-
                 while (x > rev)
                 {
-                    rev = rev * 10 + x % 10;
-                    x /= 10;
+                    rev = rev * 10 + x % 10; // Reverse the number partially.
+                    x /= 10; // Reduce the original number.
                 }
-
-                return x == rev || x == rev / 10;
+                return x == rev || x == rev / 10; // Check if the number is a palindrome.
             }
             catch (Exception)
             {
@@ -235,22 +231,22 @@ namespace Assignment_2
         }
 
         // Question 8: Fibonacci Number
+// This function calculates the nth Fibonacci number iteratively.
         public static int Fibonacci(int n)
         {
             try
             {
-                if (n == 0) return 0;
-                if (n == 1) return 1;
+                if (n == 0) return 0; // Base case for 0.
+                if (n == 1) return 1; // Base case for 1.
 
                 int a = 0, b = 1;
-                for (int i = 2; i <= n; i++)
+                for (int i = 2; i <= n; i++) // Calculate Fibonacci numbers iteratively.
                 {
                     int temp = a + b;
                     a = b;
                     b = temp;
                 }
-
-                return b;
+                return b; // Return the nth Fibonacci number.
             }
             catch (Exception)
             {
@@ -259,3 +255,5 @@ namespace Assignment_2
         }
     }
 }
+
+        
